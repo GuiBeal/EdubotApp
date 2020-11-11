@@ -1,0 +1,47 @@
+<ion-card-header>
+  <ion-card-title>Setpoints</ion-card-title>
+</ion-card-header>
+
+<ion-card style="background-color: black; padding-right: 5px">
+  <div>
+    <ion-item>
+      <ion-label>IP:</ion-label>
+      <ion-input
+        [(ngModel)]="infoEduService.ip"
+        type="string"
+      ></ion-input>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item>
+      <ion-label>Porta:</ion-label>
+      <ion-input
+        [(ngModel)]="infoEduService.adress"
+        type="number"
+      ></ion-input>
+    </ion-item>
+  </div>
+  <ion-button style="width: 100%" (click)="connect()"> Conectar </ion-button>
+</ion-card>
+
+<ion-card style="background-color: black; padding-right: 5px">
+  <div>
+    <ion-item>
+      <ion-label>Velocidade:</ion-label>
+      <ion-input
+        [(ngModel)]="infoEduService.speed"
+        type="number"
+      ></ion-input>
+    </ion-item>
+  </div>
+  <div>
+    <ion-item>
+      <ion-label>Ângulo:</ion-label>
+      <ion-input
+        [(ngModel)]="infoEduService.angle"
+        type="number"
+      ></ion-input>
+    </ion-item>
+  </div>
+  <ion-button style="width: 100%" (click)="infoEduService.saveMovementInfo()"> Salvar </ion-button>
+</ion-card>
