@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { SetpointsComponent } from '../setpoints/setpoints.component';
 
 @Component({
   selector: 'header-menu',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalController: ModalController ) { }
 
   ngOnInit() {}
+
+  async createModal()
+  {
+    let modal = await this.modalController.create({
+      component: SetpointsComponent
+    });
+    
+    modal.present();
+  }
 
 }

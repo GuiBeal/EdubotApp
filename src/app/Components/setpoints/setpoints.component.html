@@ -1,8 +1,12 @@
-<ion-card-header>
-  <ion-card-title>Setpoints</ion-card-title>
-</ion-card-header>
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Setpoints</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-<ion-card style="background-color: black; padding-right: 5px">
   <div>
     <ion-item>
       <ion-label>IP:</ion-label>
@@ -22,9 +26,7 @@
     </ion-item>
   </div>
   <ion-button style="width: 100%" (click)="connect()"> Conectar </ion-button>
-</ion-card>
 
-<ion-card style="background-color: black; padding-right: 5px">
   <div>
     <ion-item>
       <ion-label>Velocidade:</ion-label>
@@ -44,4 +46,3 @@
     </ion-item>
   </div>
   <ion-button style="width: 100%" (click)="infoEduService.saveMovementInfo()"> Salvar </ion-button>
-</ion-card>
