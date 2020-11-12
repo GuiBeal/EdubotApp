@@ -7,32 +7,30 @@
   </ion-toolbar>
 </ion-header>
 
+<div style="height: 40%;">
   <div>
     <ion-item>
       <ion-label>IP:</ion-label>
-      <ion-input
-        [(ngModel)]="infoEduService.ip"
-        type="string"
-      ></ion-input>
+      <ion-input [(ngModel)]="infoEduService.ip" type="string"></ion-input>
     </ion-item>
   </div>
   <div>
     <ion-item>
       <ion-label>Porta:</ion-label>
-      <ion-input
-        [(ngModel)]="infoEduService.adress"
-        type="number"
-      ></ion-input>
+      <ion-input [(ngModel)]="infoEduService.adress" type="number"></ion-input>
     </ion-item>
   </div>
-  <ion-button style="width: 100%" (click)="connect()"> Conectar </ion-button>
+  <ion-button style="width: 100% ; height: 40%;" (click)="connect()"> Conectar </ion-button>
+</div>
 
+<div style="height: 40%;">
   <div>
     <ion-item>
       <ion-label>Velocidade:</ion-label>
       <ion-input
         [(ngModel)]="infoEduService.speed"
         type="number"
+        (ionInput)="infoEduService.speed = limitSpeep($event.target.value, 100, 0)"
       ></ion-input>
     </ion-item>
   </div>
@@ -42,7 +40,11 @@
       <ion-input
         [(ngModel)]="infoEduService.angle"
         type="number"
+        (ionInput)="infoEduService.angle = limitSpeep($event.target.value, 360, 0)"
       ></ion-input>
     </ion-item>
   </div>
-  <ion-button style="width: 100%" (click)="infoEduService.saveMovementInfo()"> Salvar </ion-button>
+  <ion-button style="width: 100%; height: 40%;" (click)="infoEduService.saveMovementInfo()">
+    Salvar
+  </ion-button>
+</div>

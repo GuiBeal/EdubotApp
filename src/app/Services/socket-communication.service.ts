@@ -61,16 +61,6 @@ export class SocketCommunicationService {
         adress,
         (e) => {
           console.log(' success');
-          var dataString = 'Hello world';
-          var data = new Uint8Array(dataString.length);
-          for (var i = 0; i < data.length; i++) {
-            data[i] = dataString.charCodeAt(i);
-          }
-          this.socket.write(
-            data,
-            () => {},
-            () => {}
-          );
         },
         (e) => {
           console.log(' err0:');
@@ -79,28 +69,97 @@ export class SocketCommunicationService {
     }
   }
 
-  moveForward() {
-    alert('pra frente');
+  moveForward(speed: number) {
+    if (this.socket._state != ConnState.OPENED) {
+      alert(
+        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
+      );
+      return;
+    }
+
+    var data = this.stringToCharCode('v' + speed/100);
+    this.socket.write(
+      data,
+      () => {},
+      () => {}
+    );
   }
 
-  moveBack() {
-    alert('pra tras');
+  moveBack(speed: number) {
+    if (this.socket._state != ConnState.OPENED) {
+      alert(
+        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
+      );
+      return;
+    }
+
+    var data = this.stringToCharCode('v-' + speed/100);
+    this.socket.write(
+      data,
+      () => {},
+      () => {}
+    );
   }
 
-  rotateLeft() {
-    alert('rotacione esquerda');
+  rotateLeft(angle: number) {
+    if (this.socket._state != ConnState.OPENED) {
+      alert(
+        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
+      );
+      return;
+    }
+
+    var data = this.stringToCharCode('r-' + angle);
+    this.socket.write(
+      data,
+      () => {},
+      () => {}
+    );
   }
 
-  rotateRigth() {
-    alert('rotacione direita');
+  rotateRigth(angle: number) {
+    if (this.socket._state != ConnState.OPENED) {
+      alert(
+        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
+      );
+      return;
+    }
+
+    var data = this.stringToCharCode('r' + angle);
+    this.socket.write(
+      data,
+      () => {},
+      () => {}
+    );
   }
 
   stop() {
-    alert('pare');
+    if (this.socket._state != ConnState.OPENED) {
+      alert(
+        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
+      );
+      return;
+    }
+
+    var data = this.stringToCharCode('b');
+    this.socket.write(
+      data,
+      () => {},
+      () => {}
+    );
   }
 
   readBumpers(): number {
     alert('implementar');
     return 0;
+  }
+
+  stringToCharCode(dataString: string): Uint8Array {
+    var data = new Uint8Array(dataString.length);
+    for (var i = 0; i < data.length; i++) {
+      data[i] = dataString.charCodeAt(i);
+    }
+
+    return data;
   }
 }

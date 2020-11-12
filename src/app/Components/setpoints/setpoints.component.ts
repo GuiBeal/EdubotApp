@@ -9,24 +9,35 @@ import { SocketCommunicationService } from '../../Services/socket-communication.
   styleUrls: ['./setpoints.component.scss'],
 })
 export class SetpointsComponent implements OnInit {
-
-  constructor(public infoEduService: InfoEduService,
-              private socketService: SocketCommunicationService,
-              private modalController: ModalController) { }
+  constructor(
+    public infoEduService: InfoEduService,
+    private socketService: SocketCommunicationService,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {}
 
-  connect()
-  {
+  connect() {
     this.infoEduService.saveConnectionInfo();
-    this.socketService.connect(this.infoEduService.ip, this.infoEduService.adress);
+    this.socketService.connect(
+      this.infoEduService.ip,
+      this.infoEduService.adress
+    );
   }
 
-  dismissModal()
-  {
+  dismissModal() {
     this.modalController.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
 
+  limitSpeep(value: number, max: number, min: number) {
+    console.log("oi34");
+    if (value >= max) {
+      return max;
+    } else if (value <= min) {
+      return min;
+    }
+    return value;
+  }
 }

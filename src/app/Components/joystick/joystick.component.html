@@ -15,7 +15,7 @@
   <div style="width: 100%; text-align: center">
     <div style="height: 70px; margin-bottom: 5px">
       <ion-button
-        (click)="socket.moveForward()"
+        (click)="socket.moveForward(infoEduService.speed)"
         style="width: 100%; height: 100%"
       >
         <ion-icon name="caret-up-outline"></ion-icon>
@@ -23,7 +23,7 @@
     </div>
     <div style="height: 150px; margin-bottom: 5px">
       <ion-button
-        (click)="socket.rotateLeft()"
+        (click)="socket.rotateLeft(infoEduService.angle)"
         style="width: 30%; height: 100%"
       >
         <ion-icon name="caret-back-outline"></ion-icon>
@@ -36,14 +36,14 @@
         <ion-icon name="stop-outline"></ion-icon>
       </ion-button>
       <ion-button
-        (click)="socket.rotateRigth()"
+        (click)="socket.rotateRigth(infoEduService.angle)"
         style="width: 30%; height: 100%"
       >
         <ion-icon name="caret-forward-outline"></ion-icon>
       </ion-button>
     </div>
     <div style="height: 70px; margin-bottom: 5px">
-      <ion-button (click)="socket.moveBack()" style="width: 100%; height: 100%">
+      <ion-button (click)="socket.moveBack(infoEduService.speed)" style="width: 100%; height: 100%">
         <ion-icon name="caret-down-outline"></ion-icon>
       </ion-button>
     </div>
