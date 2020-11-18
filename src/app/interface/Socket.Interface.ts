@@ -1,3 +1,4 @@
+import { SocketAdapterOptions } from './SocketOptions';
 export enum ConnState{
     CLOSED = 0,
     OPENING = 1,
@@ -24,4 +25,5 @@ export interface SocketInterface {
     write: (data: any, sucess: CallbackFunction, error: CallbackFunction) => void;
     shutdownWrite: (sucess: CallbackFunction, error: CallbackFunction) => void;
     close: (sucess: CallbackFunction, error: CallbackFunction) => void;
+    setOptions: (options: SocketAdapterOptions, sucess: CallbackFunction, error: CallbackFunction) => void;
 }

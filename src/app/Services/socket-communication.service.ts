@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SocketInterface, ConnState } from '../interface/Socket.Interface';
+import { InfoEduService } from './info-edu.service';
+import { SocketAdapterOptions } from '../interface/SocketOptions';
 
 declare var Socket: any;
 
@@ -8,18 +10,17 @@ declare var Socket: any;
 })
 export class SocketCommunicationService {
   socket: SocketInterface;
-  constructor() {
+  constructor(private info: InfoEduService) {
     this.socket = new Socket();
 
     this.socket.onData = function (data) {
-      // invoked after new batch of data is received (typed array of bytes Uint8Array)
+      console.log(data);
     };
     this.socket.onError = function (errorMessage) {
-      // invoked after error occurs during connection
+      console.log('Error');
+      console.log(errorMessage);
     };
-    this.socket.onClose = function (hasError) {
-      // invoked after connection close
-    };
+    this.socket.onClose = function (hasError) {};
 
     console.log(this.socket);
   }
@@ -69,15 +70,43 @@ export class SocketCommunicationService {
     }
   }
 
+  setOptions(ip, adress)
+  {
+    var options: SocketAdapterOptions = <any>{};
+
+    options.keepAlive = true;
+    options.soTimeout = 3000;
+
+    this.socket.setOptions(
+      options,
+      () => {
+        console.log('Sucess options');
+        this.socket.open(
+          ip,
+          adress,
+          (e) => {
+            console.log(' success');
+          },
+          (e) => {
+            console.log(' err0:');
+          }
+        );
+      },
+      () => {
+        console.log('Error options');
+      }
+    );
+  }
+
   moveForward(speed: number) {
-    if (this.socket._state != ConnState.OPENED) {
+    if (this.socket._state !== ConnState.OPENED) {
       alert(
         'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
       );
       return;
     }
 
-    var data = this.stringToCharCode('v' + speed/100);
+    var data = this.stringToCharCode('v' + speed / 100);
     this.socket.write(
       data,
       () => {},
@@ -93,7 +122,7 @@ export class SocketCommunicationService {
       return;
     }
 
-    var data = this.stringToCharCode('v-' + speed/100);
+    var data = this.stringToCharCode('v-' + speed / 100);
     this.socket.write(
       data,
       () => {},
