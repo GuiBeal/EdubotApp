@@ -13,8 +13,9 @@ export class SocketCommunicationService {
   constructor(private info: InfoEduService) {
     this.socket = new Socket();
 
-    this.socket.onData = function (data) {
-      console.log(data);
+    let _this = this;
+    this.socket.onData = function(data) {
+      _this.readSensorsInfo(data);
     };
     this.socket.onError = function (errorMessage) {
       console.log('Error');
@@ -181,6 +182,38 @@ export class SocketCommunicationService {
   readBumpers(): number {
     alert('implementar');
     return 0;
+  }
+
+  readSensorsInfo(dataArr: number[])
+  {
+    //s0,s1,s2,s3,s4,s5,s6,b0,b1,b2,b3,dt,encoderLeft,encoderRigth, x, y, theta
+    let dataString = '';
+
+    dataArr.forEach(data => {
+      let char = String.fromCharCode(data);
+      dataString += char;
+    });
+    console.log("data: " + dataString);
+
+    var dtArr = dataString.split(',', 20);
+
+    this.info.S0 = dtArr[0];
+    this.info.S1 = dtArr[1];
+    this.info.S2 = dtArr[2];
+    this.info.S3 = dtArr[3];
+    this.info.S4 = dtArr[4];
+    this.info.S5 = dtArr[5];
+    this.info.S6 = dtArr[6];
+
+    let buffers = dtArr.slice(7, 11);
+
+    for(let i = 0; i < buffers.length; i++)
+    {
+      this.info.bumpers[i] = buffers[i]  === "true";
+
+      console.log(this.info.bumpers[i])
+    }
+    this.info.bumpers
   }
 
   stringToCharCode(dataString: string): Uint8Array {

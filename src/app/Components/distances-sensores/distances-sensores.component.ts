@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { SocketCommunicationService } from '../../Services/socket-communication.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'distances-sensores',
@@ -7,8 +6,15 @@ import { SocketCommunicationService } from '../../Services/socket-communication.
   styleUrls: ['./distances-sensores.component.scss'],
 })
 export class DistancesSensoresComponent implements OnInit {
+  @Input() S1: string;
+  @Input() S2: string;
+  @Input() S3: string;
+  @Input() S4: string;
+  @Input() S5: string;
+  @Input() S6: string;
+  @Input() S0: string;
 
-  constructor(public socket: SocketCommunicationService,) { }
+  constructor() { }
 
   ngOnInit() {}
 

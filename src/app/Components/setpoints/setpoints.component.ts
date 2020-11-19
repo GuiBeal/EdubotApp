@@ -17,6 +17,10 @@ export class SetpointsComponent implements OnInit {
 
   ngOnInit() {}
 
+  ngOnChanges(): void {
+    this.ngOnInit();
+  }
+
   connect() {
     this.infoEduService.saveConnectionInfo();
     this.socketService.connect(

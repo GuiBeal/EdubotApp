@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SocketCommunicationService } from '../../Services/socket-communication.service';
+import { InfoEduService } from '../../Services/info-edu.service';
 
 @Component({
   selector: 'bumpers',
@@ -8,18 +8,8 @@ import { SocketCommunicationService } from '../../Services/socket-communication.
 })
 export class BumpersComponent implements OnInit {
 
-  bumperTopLeft = false;
-  bumperTopRight = false;
-  bumperBottomLeft = false;
-  bumperBottomRight = false;
-
-  constructor(public socket: SocketCommunicationService,) { }
+  constructor(public info: InfoEduService) { }
 
   ngOnInit() {}
-
-  readBumpers()
-  {
-    this.socket.readBumpers();
-  }
 
 }

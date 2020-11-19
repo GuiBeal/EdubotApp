@@ -1,7 +1,14 @@
 <ion-card style="height: 45%; margin-top: 50px">
   <ion-slides class="slider" style="height: 100%; width: 100%">
     <ion-slide style="height: 100%">
-      <distances-sensores></distances-sensores>
+      <distances-sensores
+      [S0]="infoEduService.S0"
+      [S1]="infoEduService.S1"
+      [S2]="infoEduService.S2"
+      [S3]="infoEduService.S3"
+      [S4]="infoEduService.S4"
+      [S5]="infoEduService.S5"
+      [S6]="infoEduService.S6"></distances-sensores>
     </ion-slide>
       
     <ion-slide style="height: 100%">

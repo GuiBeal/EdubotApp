@@ -12,7 +12,7 @@ export enum ErrorType{
     WRITE_TIMEOUT = 2
 }
 
-type CallbackFunction = (message: string) => void
+type CallbackFunction = (message: any) => void
 
 export interface SocketInterface {
 

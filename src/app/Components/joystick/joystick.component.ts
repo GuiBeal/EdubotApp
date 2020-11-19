@@ -9,7 +9,7 @@ import { InfoEduService } from '../../Services/info-edu.service';
 })
 export class JoystickComponent implements OnInit {
 
-  constructor(public socket: SocketCommunicationService, public infoEduService: InfoEduService) { }
+  constructor(public socket: SocketCommunicationService, public infoEduService: InfoEduService) {   }
 
   ngOnInit() {}
 
