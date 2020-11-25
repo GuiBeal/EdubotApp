@@ -28,23 +28,13 @@ export class JoystickComponent implements OnInit {
 
   ngOnInit() {
     setInterval(() => {
-      if (
-        this.infoEduService.S0 !== this.S0 ||
-        this.infoEduService.S0 !== this.S1 ||
-        this.infoEduService.S0 !== this.S2 ||
-        this.infoEduService.S0 !== this.S3 ||
-        this.infoEduService.S0 !== this.S4 ||
-        this.infoEduService.S0 !== this.S5 ||
-        this.infoEduService.S0 !== this.S6
-      ) {
-        this.S0 = this.infoEduService.S0;
-        this.S1 = this.infoEduService.S1;
-        this.S2 = this.infoEduService.S2;
-        this.S3 = this.infoEduService.S3;
-        this.S4 = this.infoEduService.S4;
-        this.S5 = this.infoEduService.S5;
-        this.S6 = this.infoEduService.S6;
-      }
+      this.S0 = this.infoEduService.S0;
+      this.S1 = this.infoEduService.S1;
+      this.S2 = this.infoEduService.S2;
+      this.S3 = this.infoEduService.S3;
+      this.S4 = this.infoEduService.S4;
+      this.S5 = this.infoEduService.S5;
+      this.S6 = this.infoEduService.S6;
 
       if (
         this.infoEduService.bumpers[0] !== this.bumper1 ||
@@ -57,6 +47,6 @@ export class JoystickComponent implements OnInit {
         this.bumper3 = this.infoEduService.bumpers[2];
         this.bumper4 = this.infoEduService.bumpers[3];
       }
-    }, 200);
+    }, 500);
   }
 }
