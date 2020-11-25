@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { InfoEduService } from '../../Services/info-edu.service';
 
 @Component({
@@ -7,8 +7,12 @@ import { InfoEduService } from '../../Services/info-edu.service';
   styleUrls: ['./bumpers.component.scss'],
 })
 export class BumpersComponent implements OnInit {
+  @Input() Bumper1;
+  @Input() Bumper2;
+  @Input() Bumper3;
+  @Input() Bumper4;
 
-  constructor(public info: InfoEduService) { }
+  constructor() { }
 
   ngOnInit() {}
 

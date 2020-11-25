@@ -8,9 +8,55 @@ import { InfoEduService } from '../../Services/info-edu.service';
   styleUrls: ['./joystick.component.scss'],
 })
 export class JoystickComponent implements OnInit {
+  S0: string = '';
+  S1: string = '';
+  S2: string = '';
+  S3: string = '';
+  S4: string = '';
+  S5: string = '';
+  S6: string = '';
 
-  constructor(public socket: SocketCommunicationService, public infoEduService: InfoEduService) {   }
+  bumper1: boolean = false;
+  bumper2: boolean = false;
+  bumper3: boolean = false;
+  bumper4: boolean = false;
 
-  ngOnInit() {}
+  constructor(
+    public socket: SocketCommunicationService,
+    public infoEduService: InfoEduService
+  ) {}
 
+  ngOnInit() {
+    setInterval(() => {
+      if (
+        this.infoEduService.S0 !== this.S0 ||
+        this.infoEduService.S0 !== this.S1 ||
+        this.infoEduService.S0 !== this.S2 ||
+        this.infoEduService.S0 !== this.S3 ||
+        this.infoEduService.S0 !== this.S4 ||
+        this.infoEduService.S0 !== this.S5 ||
+        this.infoEduService.S0 !== this.S6
+      ) {
+        this.S0 = this.infoEduService.S0;
+        this.S1 = this.infoEduService.S1;
+        this.S2 = this.infoEduService.S2;
+        this.S3 = this.infoEduService.S3;
+        this.S4 = this.infoEduService.S4;
+        this.S5 = this.infoEduService.S5;
+        this.S6 = this.infoEduService.S6;
+      }
+
+      if (
+        this.infoEduService.bumpers[0] !== this.bumper1 ||
+        this.infoEduService.bumpers[1] !== this.bumper2 ||
+        this.infoEduService.bumpers[2] !== this.bumper3 ||
+        this.infoEduService.bumpers[3] !== this.bumper4
+      ) {
+        this.bumper1 = this.infoEduService.bumpers[0];
+        this.bumper2 = this.infoEduService.bumpers[1];
+        this.bumper3 = this.infoEduService.bumpers[2];
+        this.bumper4 = this.infoEduService.bumpers[3];
+      }
+    }, 200);
+  }
 }

@@ -13,15 +13,14 @@ export class SocketCommunicationService {
   constructor(private info: InfoEduService) {
     this.socket = new Socket();
 
-    let _this = this;
-    this.socket.onData = function(data) {
-      _this.readSensorsInfo(data);
+    this.socket.onData = (data) => {
+      this.readSensorsInfo(data);
     };
-    this.socket.onError = function (errorMessage) {
+    this.socket.onError = (errorMessage) => {
       console.log('Error');
       console.log(errorMessage);
     };
-    this.socket.onClose = function (hasError) {};
+    this.socket.onClose = (hasError) => {};
 
     console.log(this.socket);
   }
@@ -46,12 +45,16 @@ export class SocketCommunicationService {
               }
               this.socket.write(
                 data,
-                () => {},
-                () => {}
+                () => {
+                  console.log(' success Connection');
+                },
+                () => {
+                  console.log(' error Connection');
+                }
               );
             },
             (e) => {
-              console.log(' err0:');
+              console.log(' error Close');
             }
           );
         },
@@ -62,10 +65,10 @@ export class SocketCommunicationService {
         ip,
         adress,
         (e) => {
-          console.log(' success');
+          console.log(' success Connection');
         },
         (e) => {
-          console.log(' err0:');
+          console.log(' error Connection');
         }
       );
     }
@@ -107,7 +110,7 @@ export class SocketCommunicationService {
       return;
     }
 
-    var data = this.stringToCharCode('v' + speed / 100);
+    var data = this.stringToCharCode('v' + speed / 100 + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -123,7 +126,7 @@ export class SocketCommunicationService {
       return;
     }
 
-    var data = this.stringToCharCode('v-' + speed / 100);
+    var data = this.stringToCharCode('v-' + speed / 100 + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -139,7 +142,7 @@ export class SocketCommunicationService {
       return;
     }
 
-    var data = this.stringToCharCode('r-' + angle);
+    var data = this.stringToCharCode('r-' + angle + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -155,7 +158,7 @@ export class SocketCommunicationService {
       return;
     }
 
-    var data = this.stringToCharCode('r' + angle);
+    var data = this.stringToCharCode('r' + angle + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -171,17 +174,12 @@ export class SocketCommunicationService {
       return;
     }
 
-    var data = this.stringToCharCode('b');
+    var data = this.stringToCharCode('b\r\n');
     this.socket.write(
       data,
       () => {},
       () => {}
     );
-  }
-
-  readBumpers(): number {
-    alert('implementar');
-    return 0;
   }
 
   readSensorsInfo(dataArr: number[])
