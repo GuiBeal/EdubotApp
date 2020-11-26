@@ -38,13 +38,13 @@ export class JoystickComponent implements OnInit {
 
       if (
         this.infoEduService.bumpers[0] !== this.bumper1 ||
-        this.infoEduService.bumpers[1] !== this.bumper2 ||
-        this.infoEduService.bumpers[2] !== this.bumper3 ||
+        this.infoEduService.bumpers[2] !== this.bumper2 ||
+        this.infoEduService.bumpers[1] !== this.bumper3 ||
         this.infoEduService.bumpers[3] !== this.bumper4
       ) {
         this.bumper1 = this.infoEduService.bumpers[0];
-        this.bumper2 = this.infoEduService.bumpers[1];
-        this.bumper3 = this.infoEduService.bumpers[2];
+        this.bumper2 = this.infoEduService.bumpers[2];
+        this.bumper3 = this.infoEduService.bumpers[1];
         this.bumper4 = this.infoEduService.bumpers[3];
       }
     }, 500);

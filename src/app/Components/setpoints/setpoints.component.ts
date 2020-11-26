@@ -25,7 +25,7 @@ export class SetpointsComponent implements OnInit {
     this.infoEduService.saveConnectionInfo();
     this.socketService.connect(
       this.infoEduService.ip,
-      this.infoEduService.adress
+      this.infoEduService.port
     );
   }
 

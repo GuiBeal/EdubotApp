@@ -6,25 +6,25 @@ import { Storage } from '@ionic/storage';
 })
 export class InfoEduService {
   ip = '';
-  adress = 0;
+  port = 0;
   speed = 0;
   angle = 0;
 
   bumpers: boolean[] = [false, false, false, false];
-  S0: string = '0';
-  S1: string = '0';
-  S2: string = '0';
-  S3: string = '0';
-  S4: string = '0';
-  S5: string = '0';
-  S6: string = '0';
+  S0 = '0';
+  S1 = '0';
+  S2 = '0';
+  S3 = '0';
+  S4 = '0';
+  S5 = '0';
+  S6 = '0';
 
   constructor(private storage: Storage) {
     storage.get('IP').then((val) => {
       this.ip = val;
     });
-    storage.get('adress').then((val) => {
-      this.adress = val;
+    storage.get('port').then((val) => {
+      this.port = val;
     });
     storage.get('speed').then((val) => {
       this.speed = val;
@@ -39,9 +39,9 @@ export class InfoEduService {
     return this.storage.set('IP', value);
   }
 
-  setAdress(value: number) {
-    this.adress = value;
-    return this.storage.set('adress', value);
+  setPort(value: number) {
+    this.port = value;
+    return this.storage.set('port', value);
   }
 
   setSpeed(value: number) {
@@ -56,7 +56,7 @@ export class InfoEduService {
 
   saveConnectionInfo() {
     this.setIp(this.ip);
-    this.setAdress(this.adress);
+    this.setPort(this.port);
   }
 
   saveMovementInfo() {
