@@ -184,16 +184,30 @@ export class SocketCommunicationService {
 
   readSensorsInfo(dataArr: number[])
   {
-    //s0,s1,s2,s3,s4,s5,s6,b0,b1,b2,b3,dt,encoderLeft,encoderRigth, x, y, theta
+    console.log('Raw data: ' + dataArr);
+
+    if (dataArr == null) {
+      return 0;
+    }
+
+    if (dataArr[0] === 13 && dataArr[1] === 10) { // descarta \r\n
+      return 0;
+    }
+
+    // s0,s1,s2,s3,s4,s5,s6,b0,b1,b2,b3,dt,encoderLeft,encoderRigth, x, y, theta
     let dataString = '';
 
     dataArr.forEach(data => {
       let char = String.fromCharCode(data);
       dataString += char;
     });
-    console.log("data: " + dataString);
+    console.log(`ASCII data: ${dataString}`);
 
     var dtArr = dataString.split(',', 20);
+
+    if (dtArr.length !== 20) {
+      return 0;
+    }
 
     this.info.S0 = dtArr[0];
     this.info.S1 = dtArr[1];
@@ -207,7 +221,7 @@ export class SocketCommunicationService {
 
     for(let i = 0; i < buffers.length; i++)
     {
-      this.info.bumpers[i] = buffers[i]  === "true";
+      this.info.bumpers[i] = buffers[i] === "true";
 
       console.log(this.info.bumpers[i])
     }
