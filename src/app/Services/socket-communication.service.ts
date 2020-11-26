@@ -25,92 +25,84 @@ export class SocketCommunicationService {
     console.log(this.socket);
   }
 
-  connect(ip: string, adress: number) {
+  connect(ip: string, port: number) {
     console.log(this.socket._state);
 
-    if (this.socket._state == ConnState.OPENED) {
-      console.log('closing...');
+    if (this.socket._state === ConnState.OPENED) {
+      console.log('Socket is already open, closing.');
+
+      this.socket.shutdownWrite(
+        () => {
+          console.log('Socket shutdown successfully.');
+        },
+        () => {
+          console.log('Socket shutdown failed.');
+        }
+      );
 
       this.socket.close(
         () => {
+          console.log('Socket closed succesfully.');
           this.socket.open(
             ip,
-            adress,
+            port,
             (e) => {
-              console.log(' success');
-              var dataString = 'Hello world';
-              var data = new Uint8Array(dataString.length);
-              for (var i = 0; i < data.length; i++) {
-                data[i] = dataString.charCodeAt(i);
-              }
-              this.socket.write(
-                data,
-                () => {
-                  console.log(' success Connection');
-                },
-                () => {
-                  console.log(' error Connection');
-                }
-              );
+              console.log('Socket connected successfully. to ' + ip + ':' + port + '.');
+              alert('Conectado.');
             },
             (e) => {
-              console.log(' error Close');
+              console.log('Socket connection failed.');
+              alert('Não foi possível conectar.');
             }
           );
         },
-        () => {}
+        () => {
+          console.log('Socket closure failed.');
+          alert('Não foi possível conectar.');
+        }
       );
     } else {
       this.socket.open(
         ip,
-        adress,
+        port,
         (e) => {
-          console.log(' success Connection');
+          console.log('Socket connected successfully. to ' + ip + ':' + port + '.');
+          alert('Conectado.');
         },
         (e) => {
-          console.log(' error Connection');
+          console.log('Socket connection failed.');
+          alert('Não foi possível conectar.');
         }
       );
     }
   }
 
-  setOptions(ip, adress)
+  /*
+   * Deve ser chamado antes de conectar
+   */
+  setOptions()
   {
-    var options: SocketAdapterOptions = <any>{};
-
+    let options: SocketAdapterOptions = <any>{};
     options.keepAlive = true;
-    options.soTimeout = 3000;
 
     this.socket.setOptions(
       options,
       () => {
-        console.log('Sucess options');
-        this.socket.open(
-          ip,
-          adress,
-          (e) => {
-            console.log(' success');
-          },
-          (e) => {
-            console.log(' err0:');
-          }
-        );
+        console.log('Options set successfully.');
       },
       () => {
-        console.log('Error options');
+        console.log('Options setting failed.');
       }
     );
   }
 
   moveForward(speed: number) {
     if (this.socket._state !== ConnState.OPENED) {
-      alert(
-        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
-      );
+      alert('Edubot desconectado, por favor, conecte-o ao aplicativo novamente');
       return;
     }
 
-    var data = this.stringToCharCode('v' + speed / 100 + '\r\n');
+    const data = this.stringToCharCode('v' + speed / 100 + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -119,14 +111,12 @@ export class SocketCommunicationService {
   }
 
   moveBack(speed: number) {
-    if (this.socket._state != ConnState.OPENED) {
-      alert(
-        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
-      );
+    if (this.socket._state !== ConnState.OPENED) {
+      alert('Edubot desconectado, por favor, conecte-o ao aplicativo novamente');
       return;
     }
 
-    var data = this.stringToCharCode('v-' + speed / 100 + '\r\n');
+    const data = this.stringToCharCode('v-' + speed / 100 + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -135,14 +125,12 @@ export class SocketCommunicationService {
   }
 
   rotateLeft(angle: number) {
-    if (this.socket._state != ConnState.OPENED) {
-      alert(
-        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
-      );
+    if (this.socket._state !== ConnState.OPENED) {
+      alert('Edubot desconectado, por favor, conecte-o ao aplicativo novamente');
       return;
     }
 
-    var data = this.stringToCharCode('r-' + angle + '\r\n');
+    const data = this.stringToCharCode('r-' + angle + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -151,14 +139,12 @@ export class SocketCommunicationService {
   }
 
   rotateRigth(angle: number) {
-    if (this.socket._state != ConnState.OPENED) {
-      alert(
-        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
-      );
+    if (this.socket._state !== ConnState.OPENED) {
+      alert('Edubot desconectado, por favor, conecte-o ao aplicativo novamente');
       return;
     }
 
-    var data = this.stringToCharCode('r' + angle + '\r\n');
+    const data = this.stringToCharCode('r' + angle + '\r\n');
     this.socket.write(
       data,
       () => {},
@@ -167,14 +153,12 @@ export class SocketCommunicationService {
   }
 
   stop() {
-    if (this.socket._state != ConnState.OPENED) {
-      alert(
-        'Edubot desconectado, por favor, conecte-o ao aplicativo novamente'
-      );
+    if (this.socket._state !== ConnState.OPENED) {
+      alert('Edubot desconectado, por favor, conecte-o ao aplicativo novamente');
       return;
     }
 
-    var data = this.stringToCharCode('b\r\n');
+    const data = this.stringToCharCode('b\r\n');
     this.socket.write(
       data,
       () => {},
@@ -186,26 +170,22 @@ export class SocketCommunicationService {
   {
     console.log('Raw data: ' + dataArr);
 
-    if (dataArr == null) {
+    if (dataArr == null || (dataArr[0] === 13 && dataArr[1] === 10)) { // descarta mensagem vazia ou "\r\n"
       return 0;
     }
 
-    if (dataArr[0] === 13 && dataArr[1] === 10) { // descarta \r\n
-      return 0;
-    }
-
-    // s0,s1,s2,s3,s4,s5,s6,b0,b1,b2,b3,dt,encoderLeft,encoderRigth, x, y, theta
+    // s0,s1,s2,s3,s4,s5,s6,b0,b1,b2,b3,dt,encoderLeft,encoderRigth,x,y,theta,bat0,bat1,bat2
     let dataString = '';
 
     dataArr.forEach(data => {
-      let char = String.fromCharCode(data);
+      const char = String.fromCharCode(data);
       dataString += char;
     });
     console.log(`ASCII data: ${dataString}`);
 
-    var dtArr = dataString.split(',', 20);
+    const dtArr = dataString.split(',', 20);
 
-    if (dtArr.length !== 20) {
+    if (dtArr.length < 20) {
       return 0;
     }
 
@@ -217,20 +197,19 @@ export class SocketCommunicationService {
     this.info.S5 = dtArr[5];
     this.info.S6 = dtArr[6];
 
-    let buffers = dtArr.slice(7, 11);
+    const bumpers = dtArr.slice(7, 11);
 
-    for(let i = 0; i < buffers.length; i++)
+    for (let i = 0; i < bumpers.length; i++)
     {
-      this.info.bumpers[i] = buffers[i] === "true";
+      this.info.bumpers[i] = (bumpers[i] !== '0');
 
       console.log(this.info.bumpers[i])
     }
-    this.info.bumpers
   }
 
   stringToCharCode(dataString: string): Uint8Array {
-    var data = new Uint8Array(dataString.length);
-    for (var i = 0; i < data.length; i++) {
+    const data = new Uint8Array(dataString.length);
+    for (let i = 0; i < data.length; i++) {
       data[i] = dataString.charCodeAt(i);
     }
 
