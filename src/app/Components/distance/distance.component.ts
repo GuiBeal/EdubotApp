@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'distances-sensores',
-  templateUrl: './distances-sensores.component.html',
-  styleUrls: ['./distances-sensores.component.scss'],
+  selector: 'distance',
+  templateUrl: './distance.component.html',
+  styleUrls: ['./distance.component.scss'],
 })
-export class DistancesSensoresComponent implements OnInit {
+export class DistanceComponent implements OnInit {
   @Input() S1: string;
   @Input() S2: string;
   @Input() S3: string;

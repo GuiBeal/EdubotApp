@@ -7,7 +7,7 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { JoystickComponent } from '../Components/joystick/joystick.component';
 import { SetpointsComponent } from '../Components/setpoints/setpoints.component';
-import { DistancesSensoresComponent } from '../Components/distances-sensores/distances-sensores.component';
+import { DistanceComponent } from '../Components/distance/distance.component';
 import { BumpersComponent } from '../Components/bumpers/bumpers.component';
 
 @NgModule({
@@ -16,13 +16,13 @@ import { BumpersComponent } from '../Components/bumpers/bumpers.component';
     HomePage,
     JoystickComponent,
     SetpointsComponent,
-    DistancesSensoresComponent,
+    DistanceComponent,
     BumpersComponent,
   ],
   bootstrap: [
     JoystickComponent,
     SetpointsComponent,
-    DistancesSensoresComponent,
+    DistanceComponent,
     BumpersComponent,
   ],
 })
