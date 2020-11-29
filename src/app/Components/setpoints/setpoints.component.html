@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Setpoints</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Fechar</ion-button>
+      <ion-button (click)="dismissModal()">Voltar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
       <ion-input [(ngModel)]="infoEduService.port" type="number"></ion-input>
     </ion-item>
   </div>
-  <ion-button style="width: 100% ; height: 40%;" (click)="connect()"> Conectar </ion-button>
+  <ion-button style="width: 100% ; height: 40%;" (click)="connect()"> {{getConnectString()}} </ion-button>
 </div>
 
 <div style="height: 40%;">
