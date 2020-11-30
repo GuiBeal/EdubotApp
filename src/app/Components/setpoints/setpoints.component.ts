@@ -21,6 +21,10 @@ export class SetpointsComponent implements OnInit {
     this.ngOnInit();
   }
 
+  getConnectString() {
+    return this.socketService.socket._state === 2 ? 'Desconectar' : 'Conectar';
+  }
+
   connect() {
     this.infoEduService.saveConnectionInfo();
     this.socketService.connect(
@@ -36,7 +40,6 @@ export class SetpointsComponent implements OnInit {
   }
 
   limitSpeep(value: number, max: number, min: number) {
-    console.log("oi34");
     if (value >= max) {
       return max;
     } else if (value <= min) {
